@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Connection URL is provided in prisma.config.ts
+}
+
+model Bid {
+  id          String   @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  url         String?
+  category    String?
+  amount      Int
+  clicks      Int      @default(0)
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([amount(sort: Desc)])
+  @@index([createdAt(sort: Desc)])
+  @@map("bids")
+}
