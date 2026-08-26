@@ -215,9 +215,9 @@ export default function Home() {
                       >
                         <div className="min-w-0">
                           <div className="text-zinc-300 font-medium truncate">{bid.title}</div>
-                          <div className="text-zinc-600 text-sm mt-1 font-semibold">
-                            {rank && <span className="text-zinc-400">#{rank} · </span>}
-                            {formatCurrency(bid.amount)}
+                          <div className="mt-1 flex items-center gap-2 text-[11px] text-zinc-500">
+                            {rank && <span className="text-zinc-400">#{rank}</span>}
+                            {bid.category && <span>{bid.category}</span>}
                           </div>
                           <div className="text-xs text-zinc-600 mt-1">{timeAgo(bid.created_at)}</div>
                         </div>
