@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "xvisibility.lol",
   description: "A free leaderboard for visibility and discovery.",
+  verification: {
+    google: "dnQJlZ-33_OYIKHJVZMui8N_9XAfqhBBMX-UG_8Eiz0",
+  },
   icons: {
     icon: "/favicon.svg",
   },
