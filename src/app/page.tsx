@@ -22,8 +22,7 @@ export default function Home() {
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const recentDisplay = recentBids.slice(0, 5);
-  const [visitorCount, setVisitorCount] = useState(1200000);
-  const [onlineCount, setOnlineCount] = useState(500);
+  const [visitorCount, setVisitorCount] = useState(0);
 
   const fetchBids = async () => {
     const res = await fetch(`/api/bids?page=1&pageSize=${PAGE_SIZE}`);
@@ -54,9 +53,12 @@ export default function Home() {
 
   useEffect(() => {
     fetchBids();
-    // set volatile UI-only stats on client after mount to avoid hydration mismatches
-    setVisitorCount(1200000 + Math.floor(Math.random() * 50000));
-    setOnlineCount(500 + Math.floor(Math.random() * 200));
+    fetch('/api/visitors', { method: 'POST' })
+      .then((res) => res.json())
+      .then((json) => {
+        if (typeof json.totalVisitors === 'number') setVisitorCount(json.totalVisitors);
+      })
+      .catch((error) => console.error('Error recording visitor:', error));
   }, []);
 
   useEffect(() => {
@@ -127,6 +129,13 @@ export default function Home() {
           <p className="text-zinc-400 text-lg max-w-xl mx-auto">
             Claim a spot, get visibility, and show up on the board without paying to play.
           </p>
+          <div className="mt-5 inline-flex items-center gap-2 text-sm text-zinc-500">
+            <Activity size={15} className="text-emerald-400" aria-hidden="true" />
+            <span>
+              <span className="font-semibold text-zinc-300">{formatNumber(visitorCount)}</span>{' '}
+              total visitors
+            </span>
+          </div>
         </div>
 
         {/* Spotlight */}
