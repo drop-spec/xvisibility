@@ -13,13 +13,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "xvisibility.lol",
-  description: "A free leaderboard for visibility and discovery.",
-  verification: {
-    google: "dnQJlZ-33_OYIKHJVZMui8N_9XAfqhBBMX-UG_8Eiz0",
-  },
+  title: "X AI Reply Generator",
+  description: "Generate sharper, more engaging X replies in seconds.",
   icons: {
     icon: "/favicon.svg",
+  },
+  verification: {
+    google: "MZSsr_zS9a1yAryHkG9TaStz-65k0oGvUvrOpssRXsA",
   },
 };
 
@@ -29,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#0b0d12] text-white">{children}</body>
     </html>
   );
 }
