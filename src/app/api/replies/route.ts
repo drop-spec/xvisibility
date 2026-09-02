@@ -201,6 +201,7 @@ export async function POST(request: NextRequest) {
         'Content-Type': 'application/json',
         'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
         'X-Title': 'X AI Reply Generator',
+        'X-OpenRouter-Metadata': 'enabled',
       },
       body: JSON.stringify({
         model,
@@ -213,6 +214,7 @@ export async function POST(request: NextRequest) {
         ],
         temperature: 0.9,
         max_tokens: 180,
+        reasoning: { enabled: false },
       }),
     });
 
@@ -227,13 +229,23 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    const reply = data?.choices?.[0]?.message?.content?.trim();
+    const reply = typeof data?.choices?.[0]?.message?.content === 'string'
+      ? data.choices[0].message.content.trim()
+      : '';
 
     if (!reply) {
+      console.error('OpenRouter returned no reply text:', {
+        model: data?.model ?? model,
+        finishReason: data?.choices?.[0]?.finish_reason,
+      });
       return NextResponse.json({ error: 'No reply content returned from OpenRouter.' }, { status: 500 });
     }
 
-    return NextResponse.json({ reply, remainingGenerations: limit.remaining });
+    return NextResponse.json({
+      reply,
+      model: data?.model ?? model,
+      remainingGenerations: limit.remaining,
+    });
   } catch (error) {
     console.error('Failed to generate reply:', error);
     return NextResponse.json(
