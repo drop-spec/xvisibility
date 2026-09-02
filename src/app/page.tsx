@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import {
   ArrowUpRight,
   Check,
@@ -225,6 +226,20 @@ export default function Home() {
               <RefreshCw className="h-4 w-4" />
               New prompt
             </button>
+            <Link
+              href="/video-clipper"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:border-sky-400/40 hover:bg-sky-500/10"
+            >
+              Video clipper
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/visibility-score"
+              className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:border-sky-400/40 hover:bg-sky-500/10 xl:inline-flex"
+            >
+              Visibility score
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
         </header>
 
